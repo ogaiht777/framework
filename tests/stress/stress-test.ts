@@ -2,6 +2,7 @@ import { World } from '../../src/core/World';
 import { System } from '../../src/core/System';
 import { EntityId } from '../../src/core/Entity';
 import { PositionComponent } from '../../src/core/components/PositionComponent';
+import { Component } from '../../src/core/Component'; // Added missing import
 
 // --- Stress Test Configuration ---
 const NUM_ENTITIES = 10000; // Number of entities to create
