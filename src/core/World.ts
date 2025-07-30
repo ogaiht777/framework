@@ -46,23 +46,38 @@ export class World {
     private spatialGrid: ISpatialGrid; // Added
 
     constructor() {
-        this.diContainer = new DIContainer();
-        this.eventBus = new NetworkEventBus();
-        this.spatialGrid = new SimpleSpatialGrid(this); // Initialized with World instance
+        try {
+            this.diContainer = new DIContainer();
+            this.eventBus = new NetworkEventBus();
+            this.spatialGrid = new SimpleSpatialGrid(this); // Initialized with World instance
 
-        // Register core services in the DI container
-        this.diContainer.register(World, this);
-        this.diContainer.register(EventBus, this.eventBus);
-        this.diContainer.register(DebugService, new DebugService(this));
-        this.diContainer.register(MemoryProfilerService, new MemoryProfilerService());
-        this.diContainer.register(ValidationService, new ValidationService());
-        this.diContainer.register(AntiCheatService, new AntiCheatService(this.eventBus));
-        this.diContainer.register(RateLimitingService, new RateLimitingService());
-        this.diContainer.register(InputSanitizationService, new InputSanitizationService());
+            // Register core services in the DI container
+            this.diContainer.register(World, this);
+            this.diContainer.register(EventBus, this.eventBus);
+            this.diContainer.register(DebugService, new DebugService(this));
+            this.diContainer.register(MemoryProfilerService, new MemoryProfilerService());
+            this.diContainer.register(ValidationService, new ValidationService());
+            this.diContainer.register(AntiCheatService, new AntiCheatService(this.eventBus));
+            this.diContainer.register(RateLimitingService, new RateLimitingService());
+            this.diContainer.register(InputSanitizationService, new InputSanitizationService());
 
-        // Register core systems
-        this.registerSystem(new PlayerConnectionSystem(this));
-        this.registerSystem(new BatchMovementSystem(this)); // Register BatchMovementSystem
+            // Initialize ModuleManager and load example modules
+            const moduleManager = new ModuleManager(this.diContainer);
+            this.diContainer.register(ModuleManager, moduleManager); // Register ModuleManager itself
+
+            // Load example modules
+            moduleManager.loadModule(() => new ChatModule());
+            moduleManager.loadModule(() => new EconomyModule());
+            moduleManager.loadModule(() => new MinigameModule());
+
+            // Register core systems
+            this.registerSystem(new PlayerConnectionSystem(this));
+            this.registerSystem(new BatchMovementSystem(this)); // Register BatchMovementSystem
+
+            console.log('[World] ECS World initialized successfully.');
+        } catch (error) {
+            console.error('[World] Error during ECS World initialization:', error);
+        }
     }
 
     /**
