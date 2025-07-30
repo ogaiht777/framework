@@ -1,0 +1,26 @@
+{
+  "name": "fivem-ecs-framework",
+  "version": "0.1.0",
+  "description": "An abstract, developer-focused ECS framework for FiveM using TypeScript.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "typedoc"
+  },
+  "keywords": [
+    "fivem",
+    "ecs",
+    "framework",
+    "typescript"
+  ],
+  "author": "Your Name/Organization",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "typedoc": "^0.25.13",
+    "typescript": "^5.4.5"
+  }
+}

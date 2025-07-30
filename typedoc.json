@@ -1,0 +1,13 @@
+{
+  "entryPoints": [
+    "./src/index.ts",
+    "./src/services/EventBus.ts" // Explicitly include EventBus.ts
+  ],
+  "out": "./docs/api",
+  "name": "FiveM ECS Framework API Documentation",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "hideGenerator": true,
+  "theme": "default",
+  "tsconfig": "./tsconfig.json"
+}
