@@ -3,7 +3,9 @@ games { 'gta5' }
 
 -- Define scripts to be loaded on the server-side
 server_scripts {
-    'server.js' -- Main entry point for server-side logic (bundled by esbuild)
+    'server.js', -- Main entry point for server-side logic (bundled by esbuild)
+    'tests/benchmarks/entity-creation.benchmark.js', -- Benchmarks
+    'tests/stress/stress-test.js' -- Stress Test
 }
 
 -- Define scripts to be loaded on the client-side

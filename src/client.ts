@@ -1,17 +1,25 @@
 import { World } from './core/World';
+import { DIContainer } from './services/DIContainer';
 import { ModuleManager } from './services/ModuleManager';
 import { ChatModule } from '../examples/chat/ChatModule';
 import { EconomyModule } from '../examples/economy/EconomyModule';
 import { MinigameModule } from '../examples/minigame/MinigameModule';
 
-// Initialize the World for the client-side immediately
+// Initialize DIContainer first
+const diContainer = new DIContainer();
+
+// Register DIContainer itself
+diContainer.register(DIContainer, diContainer);
+
+// Initialize the World and register it
 const clientWorld = new World();
+diContainer.register(World, clientWorld);
 
-// Initialize ModuleManager and load example modules (client-side relevant ones)
-const moduleManager = new ModuleManager(clientWorld.diContainer);
-clientWorld.diContainer.register(ModuleManager, moduleManager);
+// Initialize ModuleManager and register it
+const moduleManager = new ModuleManager(diContainer);
+diContainer.register(ModuleManager, moduleManager);
 
-// Load example modules (only client-side parts if applicable)
+// Load example modules (only client-side relevant ones)
 // For simplicity, loading all example modules here, but in a real scenario,
 // you'd load only client-side specific modules or parts of them.
 moduleManager.loadModule(() => new ChatModule());

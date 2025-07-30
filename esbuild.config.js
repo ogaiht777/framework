@@ -14,21 +14,7 @@ const commonConfig = {
   logLevel: 'info',
   splitting: false,
   keepNames: true, // Keep class and function names for debugging
-  // Robust console redirection for FiveM
-  banner: {
-    js: `
-      if (typeof print === 'undefined') {
-        var print = console.log; // Fallback for non-FiveM environments
-      }
-      global.console = {
-        log: print,
-        warn: print,
-        error: print,
-        info: print,
-        debug: print,
-      };
-    `,
-  },
+  // No banner needed, IIFE handles global scope
 };
 
 async function build() {
@@ -38,18 +24,32 @@ async function build() {
     fs.mkdirSync(distDir);
   }
 
-  // Build server-side bundle
+  // Build main server-side bundle
   await esbuild.build({
     ...commonConfig,
     entryPoints: ['./src/index.ts'],
     outfile: path.resolve(distDir, 'server.js'),
   });
 
-  // Build client-side bundle
+  // Build main client-side bundle
   await esbuild.build({
     ...commonConfig,
     entryPoints: ['./src/client.ts'],
     outfile: path.resolve(distDir, 'client.js'),
+  });
+
+  // Build server-side benchmark bundle
+  await esbuild.build({
+    ...commonConfig,
+    entryPoints: ['./tests/benchmarks/entity-creation.benchmark.ts'],
+    outfile: path.resolve(distDir, 'tests/benchmarks/entity-creation.benchmark.js'),
+  });
+
+  // Build server-side stress test bundle
+  await esbuild.build({
+    ...commonConfig,
+    entryPoints: ['./tests/stress/stress-test.ts'],
+    outfile: path.resolve(distDir, 'tests/stress/stress-test.js'),
   });
 
   console.log('Build complete!');

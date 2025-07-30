@@ -61,15 +61,6 @@ export class World {
             this.diContainer.register(RateLimitingService, new RateLimitingService());
             this.diContainer.register(InputSanitizationService, new InputSanitizationService());
 
-            // Initialize ModuleManager and load example modules
-            const moduleManager = new ModuleManager(this.diContainer);
-            this.diContainer.register(ModuleManager, moduleManager); // Register ModuleManager itself
-
-            // Load example modules
-            moduleManager.loadModule(() => new ChatModule());
-            moduleManager.loadModule(() => new EconomyModule());
-            moduleManager.loadModule(() => new MinigameModule());
-
             // Register core systems
             this.registerSystem(new PlayerConnectionSystem(this));
             this.registerSystem(new BatchMovementSystem(this)); // Register BatchMovementSystem
