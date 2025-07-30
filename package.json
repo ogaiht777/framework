@@ -9,7 +9,9 @@
     "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "typedoc",
-    "postbuild": "copy fxmanifest.lua dist\\fxmanifest.lua"
+    "postbuild": "copy fxmanifest.lua dist\\fxmanifest.lua",
+    "benchmark": "ts-node tests/benchmarks/entity-creation.benchmark.ts",
+    "stress-test": "ts-node tests/stress/stress-test.ts"
   },
   "keywords": [
     "fivem",
@@ -21,6 +23,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^24.1.0",
+    "ts-node": "^10.9.2",
     "typedoc": "^0.25.13",
     "typescript": "^5.4.5"
   }
