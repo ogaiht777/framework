@@ -8,7 +8,8 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "postbuild": "copy fxmanifest.lua dist\\fxmanifest.lua"
   },
   "keywords": [
     "fivem",
